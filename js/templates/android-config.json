@@ -1,0 +1,18 @@
+{
+  "projectName": "MyAndroidApp",
+  "description": "Template Android project configuration",
+  "folderMappings": {
+    "MainActivity.kt": "app/src/main/java/com/example/app",
+    "activity_main.xml": "app/src/main/res/layout",
+    "strings.xml": "app/src/main/res/values",
+    "build.gradle": "app"
+  },
+  "fileRenames": {
+    "Main.kt": "MainActivity.kt"
+  },
+  "contentUpdates": {
+    "MainActivity.kt": {
+      "updatePackage": "com.example.app"
+    }
+  }
+}

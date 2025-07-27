@@ -1,0 +1,102 @@
+{
+  "projectName": "UniversalProjectBuilder",
+  "description": "Sistema modulare per gestione, organizzazione e generazione progetti",
+  "version": "2.0",
+  "structure": {
+    "": {
+      "files": [
+        "index.html",
+        "server.py", 
+        "README.md",
+        "package.json"
+      ]
+    },
+    "css/": {
+      "files": [
+        "main.css",
+        "components.css", 
+        "themes.css",
+        "responsive.css"
+      ]
+    },
+    "js/": {
+      "files": [
+        "app.js"
+      ]
+    },
+    "js/core/": {
+      "files": [
+        "FileManager.js",
+        "ConfigManager.js",
+        "ProjectGenerator.js",
+        "UIManager.js"
+      ]
+    },
+    "js/modules/": {
+      "files": [
+        "CodeExtractor.js",
+        "AndroidBuilder.js", 
+        "WebBuilder.js",
+        "FileOrganizer.js",
+        "ZipBuilder.js"
+      ]
+    },
+    "js/templates/": {
+      "files": [
+        "android.js",
+        "web.js",
+        "generic.js"
+      ]
+    },
+    "js/utils/": {
+      "files": [
+        "helpers.js",
+        "validators.js",
+        "constants.js"
+      ]
+    },
+    "templates/": {
+      "files": [
+        "android-config.json",
+        "web-config.json",
+        "generic-config.json"
+      ]
+    }
+  },
+  "modules": {
+    "codeExtractor": {
+      "description": "Estrae file da codice con intestazioni numeriche",
+      "features": ["parse_numbered_headers", "auto_detect_language", "generate_files"]
+    },
+    "fileOrganizer": {
+      "description": "Organizza file secondo configurazione JSON",
+      "features": ["rename_files", "change_extensions", "move_to_folders", "duplicate_files"]
+    },
+    "androidBuilder": {
+      "description": "Genera progetti Android Studio",
+      "features": ["gradle_setup", "manifest_generation", "activity_creation", "layout_generation"]
+    },
+    "webBuilder": {
+      "description": "Genera progetti web (HTML/CSS/JS/React)",
+      "features": ["package_json", "webpack_config", "component_structure", "routing"]
+    },
+    "zipBuilder": {
+      "description": "Crea archivi ZIP organizzati",
+      "features": ["folder_structure", "file_compression", "batch_download"]
+    }
+  },
+  "workflows": {
+    "code_to_files": {
+      "description": "Da codice incollato a file organizzati",
+      "steps": ["extract_code", "organize_files", "create_zip"]
+    },
+    "android_project": {
+      "description": "Genera progetto Android completo", 
+      "steps": ["extract_code", "setup_android_structure", "generate_gradle", "create_activities", "package_project"]
+    },
+    "web_project": {
+      "description": "Genera progetto web completo",
+      "steps": ["extract_code", "setup_web_structure", "generate_config", "organize_components", "package_project"]
+    }
+  }
+}

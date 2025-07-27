@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Project Builder v2.0</title>
+    
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🚀 Universal Project Builder <span class="version">v2.0</span></h1>
+            <p class="subtitle">Sistema modulare per generazione e organizzazione progetti</p>
+            
+            <div class="feature-badges">
+                <span class="badge">Code Extractor</span>
+                <span class="badge">File Organizer</span>
+                <span class="badge">Android Builder</span>
+                <span class="badge">Web Builder</span>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="tabs">
+            <button class="tab active" data-tab="extractor">
+                🔍 Code Extractor
+            </button>
+            <button class="tab" data-tab="organizer">
+                📁 File Organizer
+            </button>
+            <button class="tab" data-tab="android">
+                🤖 Android Builder
+            </button>
+            <button class="tab" data-tab="web">
+                🌐 Web Builder
+            </button>
+            <button class="tab" data-tab="config">
+                ⚙️ Configuration
+            </button>
+        </nav>
+
+        <!-- Tab Contents -->
+        
+        <!-- Code Extractor Tab -->
+        <div class="tab-content active" id="extractor">
+            <div class="card">
+                <h2>🔍 Code Extractor</h2>
+                <p class="description">Estrai file da codice con intestazioni numeriche (come il tuo generatore esistente)</p>
+                
+                <div class="input-section">
+                    <label for="codeInput">Incolla il tuo codice:</label>
+                    <textarea 
+                        id="codeInput" 
+                        placeholder="1. MainActivity.kt
+class MainActivity : AppCompatActivity() {
+    // codice...
+}
+
+2. activity_main.xml
+<?xml version='1.0'?>
+<!-- layout... -->
+
+3. build.gradle
+android {
+    // configurazione...
+}"></textarea>
+                    
+                    <div class="controls">
+                        <button class="btn btn-primary" onclick="extractCode()">
+                            🔍 Estrai File
+                        </button>
+                        <button class="btn btn-secondary" onclick="clearCode()">
+                            🗑️ Pulisci
+                        </button>
+                        <div class="options">
+                            <label>
+                                <input type="checkbox" id="autoDetectLanguage" checked>
+                                Auto-rileva linguaggio
+                            </label>
+                            <label>
+                                <input type="checkbox" id="generateConfig" checked>
+                                Genera config.json
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results" id="extractResults">
+                    <div class="empty-state">
+                        <div class="icon">📄</div>
+                        <h3>Nessun file estratto</h3>
+                        <p>Incolla il codice sopra per iniziare</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- File Organizer Tab -->
+        <div class="tab-content" id="organizer">
+            <div class="card">
+                <h2>📁 File Organizer</h2>
+                <p class="description">Organizza file secondo configurazione JSON</p>
+                
+                <div class="upload-section">
+                    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                        <div class="upload-icon">📤</div>
+                        <div class="upload-text">
+                            <strong>Carica file da organizzare</strong>
+                            <span>Trascina file qui o clicca per selezionare</span>
+                        </div>
+                        <input type="file" id="fileInput" multiple style="display: none;">
+                    </div>
+                    
+                    <div class="config-section">
+                        <h3>Configurazione Organizzazione</h3>
+                        <div class="config-options">
+                            <button class="btn btn-secondary" onclick="loadConfigTemplate('android')">
+                                📱 Template Android
+                            </button>
+                            <button class="btn btn-secondary" onclick="loadConfigTemplate('web')">
+                                🌐 Template Web
+                            </button>
+                            <button class="btn btn-secondary" onclick="uploadConfig()">
+                                📄 Carica JSON
+                            </button>
+                        </div>
+                        
+                        <textarea id="configEditor" placeholder="Configurazione JSON apparirà qui..."></textarea>
+                    </div>
+                </div>
+
+                <div class="file-list" id="organizerFiles"></div>
+            </div>
+        </div>
+
+        <!-- Android Builder Tab -->
+        <div class="tab-content" id="android">
+            <div class="card">
+                <h2>🤖 Android Builder</h2>
+                <p class="description">Genera progetti Android Studio completi</p>
+                
+                <div class="project-config">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="androidAppName">Nome App</label>
+                            <input type="text" id="androidAppName" value="MyApp" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="androidPackage">Package Name</label>
+                            <input type="text" id="androidPackage" value="com.example.myapp" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="androidGradleVersion">Gradle Version</label>
+                            <select id="androidGradleVersion">
+                                <option value="8.1.1">8.1.1</option>
+                                <option value="8.2.0">8.2.0</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="androidKotlinVersion">Kotlin Version</label>
+                            <select id="androidKotlinVersion">
+                                <option value="1.9.0">1.9.0</option>
+                                <option value="1.9.20">1.9.20</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-selection">
+                        <h3>Activities da generare</h3>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="main" checked disabled>
+                                <span>📱 MainActivity (obbligatorio)</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="login">
+                                <span>🔐 LoginActivity</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="settings">
+                                <span>⚙️ SettingsActivity</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="profile">
+                                <span>👤 ProfileActivity</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="android-results" id="androidResults"></div>
+            </div>
+        </div>
+
+        <!-- Web Builder Tab -->
+        <div class="tab-content" id="web">
+            <div class="card">
+                <h2>🌐 Web Builder</h2>
+                <p class="description">Genera progetti web (HTML/CSS/JS/React)</p>
+                
+                <div class="project-config">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="webProjectName">Nome Progetto</label>
+                            <input type="text" id="webProjectName" value="my-web-app" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="webProjectType">Tipo Progetto</label>
+                            <select id="webProjectType">
+                                <option value="vanilla">Vanilla HTML/CSS/JS</option>
+                                <option value="react">React App</option>
+                                <option value="vue">Vue.js App</option>
+                                <option value="angular">Angular App</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="webCssFramework">CSS Framework</label>
+                            <select id="webCssFramework">
+                                <option value="none">Nessuno</option>
+                                <option value="bootstrap">Bootstrap</option>
+                                <option value="tailwind">Tailwind CSS</option>
+                                <option value="bulma">Bulma</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="webFeatures">Features</label>
+                            <div class="checkbox-list">
+                                <label><input type="checkbox" value="router"> Routing</label>
+                                <label><input type="checkbox" value="api"> API Integration</label>
+                                <label><input type="checkbox" value="auth"> Authentication</label>
+                                <label><input type="checkbox" value="pwa"> PWA Support</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="web-results" id="webResults"></div>
+            </div>
+        </div>
+
+        <!-- Configuration Tab -->
+        <div class="tab-content" id="config">
+            <div class="card">
+                <h2>⚙️ Configuration</h2>
+                <p class="description">Gestisci template e configurazioni</p>
+                
+                <div class="config-management">
+                    <div class="template-section">
+                        <h3>Template Disponibili</h3>
+                        <div class="template-grid" id="templateGrid">
+                            <!-- Templates will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <div class="custom-config">
+                        <h3>Configurazione Personalizzata</h3>
+                        <div class="config-editor">
+                            <textarea id="customConfigEditor" placeholder="Inserisci configurazione JSON personalizzata..."></textarea>
+                            <div class="config-actions">
+                                <button class="btn btn-primary" onclick="validateConfig()">
+                                    ✅ Valida
+                                </button>
+                                <button class="btn btn-secondary" onclick="saveConfig()">
+                                    💾 Salva Template
+                                </button>
+                                <button class="btn btn-success" onclick="exportConfig()">
+                                    📤 Esporta
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions Bar -->
+        <div class="actions-bar">
+            <div class="main-actions">
+                <button class="btn btn-primary btn-large" onclick="generateProject()">
+                    🚀 Genera Progetto
+                </button>
+                <button class="btn btn-success btn-large" onclick="downloadResult()">
+                    📦 Scarica ZIP
+                </button>
+            </div>
+            
+            <div class="status-info" id="statusInfo">
+                <span class="status-text">Pronto</span>
+                <div class="progress-bar" style="display: none;">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    
+    <!-- Core Application (ES6 Modules) -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

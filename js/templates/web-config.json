@@ -1,0 +1,14 @@
+{
+  "projectName": "MyWebApp",
+  "description": "Template web project configuration",
+  "folderMappings": {
+    "index.html": "public",
+    "App.js": "src/components",
+    "main.css": "src/styles",
+    "package.json": "."
+  },
+  "fileRenames": {
+    "app.js": "App.js",
+    "style.css": "main.css"
+  }
+}
